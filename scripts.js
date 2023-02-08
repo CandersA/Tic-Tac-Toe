@@ -1,6 +1,8 @@
 const boxes = Array.from(document.getElementsByClassName('grid-box'));
 const inputO = document.getElementById('player-o');
 const inputX = document.getElementById('player-x');
+let playerOne;
+let playerTwo;
 
 const player = (playerName, marker) => {
   const getName = () => playerName;
@@ -8,7 +10,7 @@ const player = (playerName, marker) => {
   return { getName, getMarker };
 };
 
-const gameBoard = (() => {
+const game = (() => {
   const markerArray = [];
   let currentMarker = 'o';
 
@@ -18,23 +20,65 @@ const gameBoard = (() => {
     } else {
       currentMarker = 'o';
     }
+    return currentMarker;
+  }
+
+  function addToArray(id) {
+    markerArray[id] = currentMarker;
+  }
+
+  function checkWinner() {
+    console.log(currentMarker);
+    if (((markerArray[0] === currentMarker)
+        && (markerArray[1] === currentMarker)
+        && (markerArray[2] === currentMarker))
+
+        || ((markerArray[3] === currentMarker)
+        && (markerArray[4] === currentMarker)
+        && (markerArray[5] === currentMarker))
+
+        || ((markerArray[6] === currentMarker)
+        && (markerArray[7] === currentMarker)
+        && (markerArray[8] === currentMarker))
+
+        || ((markerArray[0] === currentMarker)
+        && (markerArray[3] === currentMarker)
+        && (markerArray[6] === currentMarker))
+
+        || ((markerArray[1] === currentMarker)
+        && (markerArray[4] === currentMarker)
+        && (markerArray[7] === currentMarker))
+
+        || ((markerArray[2] === currentMarker)
+        && (markerArray[5] === currentMarker)
+        && (markerArray[8] === currentMarker))
+
+        || ((markerArray[0] === currentMarker)
+        && (markerArray[4] === currentMarker)
+        && (markerArray[8] === currentMarker))
+
+        || ((markerArray[2] === currentMarker)
+        && (markerArray[4] === currentMarker)
+        && (markerArray[6] === currentMarker))) {
+      if (currentMarker === 'o') {
+        console.log(`${playerOne.getName()} is the winner`);
+      } else {
+        console.log(`${playerTwo.getName()} is the winner`);
+      }
+    }
+  }
+
+  function logArray() {
+    console.log(markerArray);
   }
 
   return {
-    addToArray: (id) => {
-      markerArray[id] = currentMarker;
-    },
-    logArray: () => {
-      console.log(markerArray);
-    },
-    switchTurns,
-    currentMarker,
-    markerArray,
+    checkWinner, switchTurns, addToArray, logArray, markerArray,
   };
 })();
 
 const displayController = (() => {
-  const { markerArray } = gameBoard;
+  const { markerArray } = game;
 
   function displayMarker(appendTo) {
     const marker = document.createElement('img');
@@ -49,9 +93,6 @@ const displayController = (() => {
   return { displayMarker };
 })();
 
-let playerOne;
-let playerTwo;
-
 inputO.addEventListener('input', () => {
   playerOne = player(inputO.value, 'o');
   return playerOne;
@@ -62,15 +103,12 @@ inputX.addEventListener('input', () => {
   return playerTwo;
 });
 
-const game = (() => {
-
-})();
-
 boxes.forEach((box) => {
   box.addEventListener('click', () => {
-    gameBoard.addToArray(box.id - 1);
-    gameBoard.logArray();
-    gameBoard.switchTurns();
+    game.addToArray(box.id - 1);
+    game.logArray();
+    game.checkWinner();
+    game.switchTurns();
     displayController.displayMarker(box);
   });
 });
