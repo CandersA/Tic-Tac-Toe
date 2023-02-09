@@ -105,10 +105,12 @@ inputX.addEventListener('input', () => {
 
 boxes.forEach((box) => {
   box.addEventListener('click', () => {
-    game.addToArray(box.id - 1);
-    game.logArray();
-    game.checkWinner();
-    game.switchTurns();
-    displayController.displayMarker(box);
+    if (!box.hasChildNodes()) {
+      game.addToArray(box.id - 1);
+      game.logArray();
+      game.checkWinner();
+      game.switchTurns();
+      displayController.displayMarker(box);
+    }
   });
 });
