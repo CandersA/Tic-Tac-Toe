@@ -69,6 +69,11 @@ const game = (() => {
       displayStatus.style.fontSize = '20px';
       startBtn.classList.add('resetButton');
       startBtn.textContent = 'Reset';
+    } else if (markerArray.length === 9 && !markerArray.includes(undefined)) {
+      displayStatus.textContent = 'It was a tie';
+      displayStatus.style.fontSize = '20px';
+      startBtn.classList.add('resetButton');
+      startBtn.textContent = 'Reset';
     }
   }
 
