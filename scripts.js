@@ -1,6 +1,8 @@
 const boxes = Array.from(document.getElementsByClassName('grid-box'));
 const inputO = document.getElementById('player-o');
 const inputX = document.getElementById('player-x');
+const startBtn = document.getElementById('startbtn');
+const displayStatus = document.querySelector('.warn');
 let playerOne;
 let playerTwo;
 
@@ -61,10 +63,11 @@ const game = (() => {
         && (markerArray[4] === currentMarker)
         && (markerArray[6] === currentMarker))) {
       if (currentMarker === 'o') {
-        console.log(`${playerOne.getName()} is the winner`);
+        displayStatus.textContent = `${playerOne.getName()} is the winner`;
       } else {
-        console.log(`${playerTwo.getName()} is the winner`);
+        displayStatus.textContent = `${playerTwo.getName()} is the winner`;
       }
+      displayStatus.style.fontSize = '20px';
     }
   }
 
@@ -90,27 +93,44 @@ const displayController = (() => {
     appendTo.appendChild(marker);
   }
 
-  return { displayMarker };
+  function activateGame() {
+    if (displayController.checkInputO && displayController.checkInputX) {
+      startBtn.classList.add('active');
+    }
+  }
+
+  return {
+    displayMarker, activateGame,
+  };
 })();
+
+startBtn.addEventListener('click', () => {
+  if (startBtn.classList.contains('active')) {
+    displayStatus.textContent = 'The game has started!';
+    boxes.forEach((box) => {
+      box.addEventListener('click', () => {
+        if (!box.hasChildNodes()) {
+          game.addToArray(box.id - 1);
+          game.logArray();
+          game.checkWinner();
+          game.switchTurns();
+          displayController.displayMarker(box);
+        }
+      });
+    });
+  }
+});
 
 inputO.addEventListener('input', () => {
   playerOne = player(inputO.value, 'o');
+  displayController.checkInputO = true;
+  displayController.activateGame();
   return playerOne;
 });
 
 inputX.addEventListener('input', () => {
   playerTwo = player(inputX.value, 'x');
+  displayController.checkInputX = true;
+  displayController.activateGame();
   return playerTwo;
-});
-
-boxes.forEach((box) => {
-  box.addEventListener('click', () => {
-    if (!box.hasChildNodes()) {
-      game.addToArray(box.id - 1);
-      game.logArray();
-      game.checkWinner();
-      game.switchTurns();
-      displayController.displayMarker(box);
-    }
-  });
 });

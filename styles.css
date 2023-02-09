@@ -35,8 +35,8 @@ main {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-template-rows: repeat(3, 1fr);
-    height: 40vw;
-    width: 40vw;
+    height: 37vw;
+    width: 37vw;
 }
 
 .grid-box {
@@ -63,6 +63,30 @@ main {
     flex-direction: column;
     gap: 30px;
     justify-content: center;
+}
+
+.selection button {
+    border: none;
+    background-color: grey;
+    color: white;
+    font-size: 25px;
+    font-family: inherit;
+    padding: 15px 0;
+    border-radius: 50px;
+}
+
+.selection button.active:hover,
+.selection button.active:active {
+    cursor: pointer;
+    filter: brightness(90%);
+}
+
+.selection button.active {
+    background-color: orange;
+}
+
+.warn {
+    text-align: center;
 }
 
 .selection div {
