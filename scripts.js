@@ -30,7 +30,6 @@ const game = (() => {
   }
 
   function checkWinner() {
-    console.log(currentMarker);
     if (((markerArray[0] === currentMarker)
         && (markerArray[1] === currentMarker)
         && (markerArray[2] === currentMarker))
@@ -73,12 +72,8 @@ const game = (() => {
     }
   }
 
-  function logArray() {
-    console.log(markerArray);
-  }
-
   return {
-    checkWinner, switchTurns, addToArray, logArray, markerArray,
+    checkWinner, switchTurns, addToArray, markerArray,
   };
 })();
 
@@ -115,7 +110,6 @@ startBtn.addEventListener('click', () => {
       box.addEventListener('click', () => {
         if (!box.hasChildNodes()) {
           game.addToArray(box.id - 1);
-          game.logArray();
           game.checkWinner();
           game.switchTurns();
           displayController.displayMarker(box);
