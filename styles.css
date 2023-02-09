@@ -85,6 +85,10 @@ main {
     background-color: orange;
 }
 
+.selection button.resetButton {
+    background-color: rgb(233, 159, 159);
+}
+
 .warn {
     text-align: center;
 }

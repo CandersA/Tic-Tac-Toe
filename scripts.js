@@ -68,6 +68,8 @@ const game = (() => {
         displayStatus.textContent = `${playerTwo.getName()} is the winner`;
       }
       displayStatus.style.fontSize = '20px';
+      startBtn.classList.add('resetButton');
+      startBtn.textContent = 'Reset';
     }
   }
 
@@ -105,7 +107,9 @@ const displayController = (() => {
 })();
 
 startBtn.addEventListener('click', () => {
-  if (startBtn.classList.contains('active')) {
+  if (startBtn.classList.contains('resetButton')) {
+    window.location.reload();
+  } else if (startBtn.classList.contains('active')) {
     displayStatus.textContent = 'The game has started!';
     boxes.forEach((box) => {
       box.addEventListener('click', () => {
